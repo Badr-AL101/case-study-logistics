@@ -176,9 +176,26 @@ services:
       - -c
       - airflow
 
-  # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
-  # or by explicitly targeted on the command line e.g. docker-compose up flower.
-  # See: https://docs.docker.com/compose/profiles/
+  warehouse:
+    image: mysql:oraclelinux9
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_DATABASE: logistics
+      MYSQL_USER: user
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_root_password
+      - db_password
+
+secrets:
+   db_password:
+     file: secrets/mysql_db_user.txt
+   db_root_password:
+     file: secrets/mysql_db_root.txt
+
 volumes:
   postgres-db-volume:
   postgres-dw-volume:
+  db_data:
