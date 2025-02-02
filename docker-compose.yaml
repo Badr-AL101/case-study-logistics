@@ -188,7 +188,8 @@ services:
     secrets:
       - db_root_password
       - db_password
-
+    ports:
+      - "3306:3306"
 secrets:
    db_password:
      file: secrets/mysql_db_user.txt
