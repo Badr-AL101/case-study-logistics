@@ -203,6 +203,8 @@ services:
     depends_on:
       warehouse:
         condition: service_healthy
+    secrets:
+      - db_password
 
 secrets:
    db_password:

@@ -1,7 +1,11 @@
 from sqlalchemy import create_engine, text
 
+password_file = "/run/secrets/db_password"
+with open(password_file,"r") as f:
+     db_password = f.readline().strip()
+
 # Database connection URL
-DATABASE_URL = "mysql+pymysql://user:user@logistics-etl-warehouse-1/logistics"
+DATABASE_URL = f"mysql+pymysql://user:{db_password}@logistics-etl-warehouse-1/logistics"
 
 engine = create_engine(DATABASE_URL, echo=True)
 
