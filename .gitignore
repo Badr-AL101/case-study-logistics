@@ -1,5 +1,8 @@
 # db secrets
 secrets/
+
+## data
+data/
 # Airflow configuration
 airflow.cfg
 airflow_login.py
