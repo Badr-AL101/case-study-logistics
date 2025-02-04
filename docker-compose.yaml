@@ -205,12 +205,17 @@ services:
         condition: service_healthy
     secrets:
       - db_password
+      - remote_server_password
+    ports:
+      - "8888:8888"
 
 secrets:
    db_password:
      file: secrets/mysql_db_user.txt
    db_root_password:
      file: secrets/mysql_db_root.txt
+   remote_server_password:
+     file: secrets/remote_server_pass.txt
 
 volumes:
   postgres-db-volume:

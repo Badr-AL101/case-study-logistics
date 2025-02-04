@@ -3,6 +3,9 @@ secrets/
 
 ## data
 data/
+## notebooks used for exploration
+notebooks/
+
 # Airflow configuration
 airflow.cfg
 airflow_login.py

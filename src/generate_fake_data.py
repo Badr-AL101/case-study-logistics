@@ -2,6 +2,7 @@ import json
 from faker import Faker
 import random
 from datetime import datetime, timedelta
+import sys
 
 fake = Faker()
 
@@ -151,7 +152,7 @@ def create_user():
     }
 
 def create_tracker():
-    tracker_type = random.choice(["SEND", "RECEIVE", "IN-TRANSIT", "DELIVERED", "ORDERED"])
+    tracker_type = random.choice(["SEND", "RECEIVED", "IN-TRANSIT", "DELIVERED", "ORDERED"])
     tracker_info = {
         "trackerId": fake.uuid4(),
         "order_id": str(fake.random_int(min=100000, max=999999)),
@@ -197,13 +198,38 @@ def generate_record():
 
     return record
 
-def generate_data(count=10):
+
+def generate_data(count):
     return [generate_record() for _ in range(count)]
 
-# Generate and save the data
-data = generate_data(10)
-with open('data.json', 'w') as f:
-    json.dump(data, f, indent=4)
+def main(data_size="medium"):
+    small_range = [5000,9999]
+    medium_range = [10000,20000]
+    large_range = [25000,50000]
+    
+    data_range = medium_range
 
-print("Data generated and saved to 'data.json'")
+    if data_size.lower() == "small":
+        data_range = small_range
+    elif data_size.lower() == "large":
+        data_range = large_range
+    
+    n_records = random.randint(data_range[0],data_range[1]) 
+    print(f'data size is : {data_size}')
+    print(f'number of records to generate is {n_records}')
+    
+    # Generate and save the data
+    data = generate_data(n_records)
+    today = datetime.now().strftime("%Y%m%d")
+    with open(f'/usr/app/data/data_{today}.json', 'w') as f:
+        json.dump(data, f, indent=4)
 
+    print("Data generated and saved to 'data.json'")
+
+if __name__ == '__main__':
+    # Check if a command-line argument is provided
+    if len(sys.argv) > 1:
+        data_size = sys.argv[1]
+        main(data_size=data_size)   
+    else:
+        main()

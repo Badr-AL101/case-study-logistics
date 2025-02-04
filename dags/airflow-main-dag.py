@@ -35,9 +35,22 @@ with DAG(
     catchup=False,
     schedule="0 0 * * *",
 ):
-    test_connection = SSHOperator(
-        task_id= "test_connection",
+    # 1. Generate data for the day
+    generate_data = SSHOperator(
+        task_id= "generate_fake_data",
         ssh_hook = sshHook,
-        command= "python /usr/src/app/test_connection.py"
+        cmd_timeout = 60 * 15,
+        command= "python /usr/app/src/generate_fake_data.py medium"
     )
+
+    # 2. load data to mysql
+    prepare_load_data = SSHOperator(
+        task_id= "prepare_and_load",
+        ssh_hook = sshHook,
+        command= "python /usr/app/src/prepare_load.py"
+    )
+
+    # 3. Perform transformation 
+
+    generate_data >> prepare_load_data
     
