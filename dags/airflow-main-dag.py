@@ -62,14 +62,14 @@ with DAG(
         task_id= "generate_fake_data",
         ssh_hook = sshHook,
         cmd_timeout = 60 * 15,
-        command= "pythonn /usr/app/src/generate_fake_data.py medium"
+        command= "python /usr/app/src/generate_fake_data.py medium"
     )
 
     # 2. load data to mysql
     prepare_load_data = SSHOperator(
         task_id= "prepare_and_load",
         ssh_hook = sshHook,
-        command= "pythonn /usr/app/src/prepare_load.py"
+        command= "python /usr/app/src/prepare_load.py"
     )
 
     # 3. Perform transformation 
