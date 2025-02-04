@@ -3,6 +3,10 @@ secrets/
 
 ## data
 data/
+## notebooks used for exploration
+notebooks/
+
+dags/slack-test.py
 # Airflow configuration
 airflow.cfg
 airflow_login.py
