@@ -42,6 +42,7 @@ DATABASE_URL = f"mysql+pymysql://user:{db_password}@logistics-etl-warehouse-1/lo
 
 engine = create_engine(DATABASE_URL, echo=True)
 
+df.to_csv('f/usr/app/data/data_{today}.csv',index=False)
 df.to_sql('logistics_raw',engine,index=False,if_exists='replace')
 
 with engine.connect() as connection:
